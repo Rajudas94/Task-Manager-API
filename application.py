@@ -31,7 +31,7 @@ class Task(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 # Routes
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['POST'])  #Used for registering user
 def register():
     data = request.get_json()
     hashed_pw = bcrypt.generate_password_hash(data['password']).decode('utf-8')
@@ -40,7 +40,7 @@ def register():
     db.session.commit()
     return jsonify({'message': 'User registered successfully'})
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST']) #Used for Login
 def login():
     data = request.get_json()
     user = User.query.filter_by(username=data['username']).first()
@@ -49,14 +49,14 @@ def login():
         return jsonify(access_token=access_token)
     return jsonify({'message': 'Invalid credentials'}), 401
 
-@app.route('/tasks', methods=['GET'])
+@app.route('/tasks', methods=['GET']) #Used for displaying id, title, description
 @jwt_required()
 def get_tasks():
     user_id = get_jwt_identity()
     tasks = Task.query.filter_by(user_id=user_id).all()
     return jsonify([{ 'id': t.id, 'title': t.title, 'description': t.description, 'done': t.done } for t in tasks])
 
-@app.route('/tasks', methods=['POST'])
+@app.route('/tasks', methods=['POST']) #Used for Creating Tasks
 @jwt_required()
 def add_task():
     data = request.get_json()
@@ -66,7 +66,7 @@ def add_task():
     db.session.commit()
     return jsonify({'message': 'Task created'})
 
-@app.route('/tasks/<int:task_id>', methods=['PUT'])
+@app.route('/tasks/<int:task_id>', methods=['PUT']) #Used for Updating Tasks
 @jwt_required()
 def update_task(task_id):
     data = request.get_json()
@@ -80,7 +80,7 @@ def update_task(task_id):
     db.session.commit()
     return jsonify({'message': 'Task updated'})
 
-@app.route('/tasks/<int:task_id>', methods=['DELETE'])
+@app.route('/tasks/<int:task_id>', methods=['DELETE']) #Used for Deleting Tasks
 @jwt_required()
 def delete_task(task_id):
     user_id = get_jwt_identity()
