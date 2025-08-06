@@ -31,14 +31,15 @@ class Task(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 # Routes
-@app.route('/register', methods=['POST'])  #Used for registering user
+@app.route('/register', methods=['POST'])  #Used for registering new user.
 def register():
-    data = request.get_json()
-    hashed_pw = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-    new_user = User(username=data['username'], password=hashed_pw)
-    db.session.add(new_user)
+    data = request.get_json() # getting data in json format
+    hashed_pw = bcrypt.generate_password_hash(data['password']).decode('utf-8') #Storing Password as hash with utf-8 
+    new_user = User(username = data['username'], password=hashed_pw) #username and password for new user
+    db.session.add(new_user) #Adds the new User
     db.session.commit()
-    return jsonify({'message': 'User registered successfully'})
+    return jsonify({'message': 'User registered successfully'})  #return message after successfull registration of New User.
+
 
 @app.route('/login', methods=['POST']) #Used for Login
 def login():
