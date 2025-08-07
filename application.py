@@ -43,12 +43,12 @@ def register():
 
 @app.route('/login', methods=['POST']) #Used for Login
 def login():
-    data = request.get_json()
-    user = User.query.filter_by(username=data['username']).first()
-    if user and bcrypt.check_password_hash(user.password, data['password']):
+    data = request.get_json() 	#getting data in Json format
+    user = User.query.filter_by(username=data['username']).first() #searching for username in db
+    if user and bcrypt.check_password_hash(user.password, data['password']): #If username and password matches
         access_token = create_access_token(identity=user.id)
         return jsonify(access_token=access_token)
-    return jsonify({'message': 'Invalid credentials'}), 401
+    return jsonify({'message': 'Invalid credentials'}), 401 #if username and password doesn't match, return this message with the error 401 response
 
 @app.route('/tasks', methods=['GET']) #Used for displaying id, title, description
 @jwt_required()
