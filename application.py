@@ -50,12 +50,12 @@ def login():
         return jsonify(access_token=access_token)
     return jsonify({'message': 'Invalid credentials'}), 401 #if username and password doesn't match, return this message with the error 401 response
 
-@app.route('/tasks', methods=['GET']) #Used for displaying id, title, description
+@app.route('/tasks', methods=['GET']) #Used for listing tasks by displaying their id, title and task description
 @jwt_required()
 def get_tasks():
-    user_id = get_jwt_identity()
-    tasks = Task.query.filter_by(user_id=user_id).all()
-    return jsonify([{ 'id': t.id, 'title': t.title, 'description': t.description, 'done': t.done } for t in tasks])
+    user_id = get_jwt_identity() # getting unique user id
+    tasks = Task.query.filter_by(user_id=user_id).all() #getting task/s based on user id 
+    return jsonify([{ 'id': t.id, 'title': t.title, 'description': t.description, 'done': t.done } for t in tasks]) #iterating in task/s and displaying which task/s are done by their respective id's, description and title
 
 @app.route('/tasks', methods=['POST']) #Used for Creating Tasks
 @jwt_required()
