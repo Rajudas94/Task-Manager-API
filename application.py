@@ -17,7 +17,8 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 
-# Models
+# Models 
+# Schema of the databases used in this application
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -60,12 +61,12 @@ def get_tasks():
 @app.route('/tasks', methods=['POST']) #Used for Creating Tasks
 @jwt_required()
 def add_task():
-    data = request.get_json()
-    user_id = get_jwt_identity()
-    new_task = Task(title=data['title'], description=data.get('description', ''), user_id=user_id)
-    db.session.add(new_task)
-    db.session.commit()
-    return jsonify({'message': 'Task created'})
+    data = request.get_json() #Get Data in Json Format
+    user_id = get_jwt_identity() #Get User Id
+    new_task = Task(title=data['title'], description=data.get('description', ''), user_id=user_id) #get title and description of the new task from data field
+    db.session.add(new_task) #Record the new task in the database
+    db.session.commit() #Save the Changes
+    return jsonify({'message': 'Task created'}) #Return message after successful addition of the new task
 
 @app.route('/tasks/<int:task_id>', methods=['PUT']) #Used for Updating Tasks
 @jwt_required()
