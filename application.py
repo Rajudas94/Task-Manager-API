@@ -93,7 +93,7 @@ def delete_task(task_id):
     db.session.commit()							# Save changes to the Task db
     return jsonify({'message': 'Task deleted'})				# Return "Task deleted Successfully" message
 
-if __name__ == '__main__':
+if __name__ == '__main__':   
     with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+        db.create_all()      # create the databases Task and User, Task will record all information of task and user will contain all info for users
+    app.run(debug=True)      # run the app
