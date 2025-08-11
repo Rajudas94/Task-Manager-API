@@ -20,16 +20,16 @@ jwt = JWTManager(app)							# Have used JWTManager for authentication and author
 # Models 
 # Schema of the databases used in this application
 class User(db.Model):							#User db will have id, username and password fields 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)  #id column
+    username = db.Column(db.String(80), unique=True, nullable=False) #username field
+    password = db.Column(db.String(200), nullable=False) #password column
 
 class Task(db.Model):                                                   #Task db will have id, title, description, status and user id fields
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(120), nullable=False)
-    description = db.Column(db.String(300))
-    done = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True) #task id column
+    title = db.Column(db.String(120), nullable=False) #task title column
+    description = db.Column(db.String(300)) #column for task description
+    done = db.Column(db.Boolean, default=False) #status of task column
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) #user id column, has a relation with user db through the user id column values 
 
 # Routes
 @app.route('/register', methods=['POST'])  #Used for registering new user.
