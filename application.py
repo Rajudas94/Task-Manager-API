@@ -96,4 +96,4 @@ def delete_task(task_id):
 if __name__ == '__main__':   
     with app.app_context():
         db.create_all()      # create the databases Task and User, Task will record all information of task and user will contain all info for users
-    app.run(debug=True)      # run
+    app.run(debug=True)      
