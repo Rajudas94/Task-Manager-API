@@ -2,8 +2,8 @@ Requirements for the Task Manager API:
 
 1. Python
 2. Flask
-3. JWT
+3. Authenentication/Authorization
 4. Databases
 5. API Foundation
 6. CRUD Principles
-7. Tokens
+
