@@ -5,3 +5,6 @@ A simple task manager management application used for creating, deleting, updati
 Tech Stack:
 
 1. Python & Flask
+Make Sure the system has Python and Flask Installed
+
+
