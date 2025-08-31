@@ -6,5 +6,5 @@ Requirements for the Task Manager API:
 4. Databases
 5. API
 6. CRUD Principles
-
+7. Cloud 
 
