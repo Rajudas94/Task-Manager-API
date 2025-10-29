@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_cors import CORS
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
@@ -9,6 +10,9 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
+
+CORS(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///tasks.db')
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'super-secret')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
@@ -34,9 +38,19 @@ class Task(db.Model):                                                   #Task db
 # Routes
 @app.route('/register', methods=['POST'])  #Used for registering new user.
 def register():
-    data = request.get_json()                                        # getting data in json format
+
+    data = request.get_json() or {} # getting data in json format
+    
+    if not data.get('username') or not data.get('password'):
+        
+        return jsonify( {'success' : False, 'message' : 'username and password required'} ), 400
+    
+    if User.query.filter_by(username = data['username']).first():
+
+        return jsonify({'success' : False, 'message' : 'username already exists'}), 400
+                                               
     hashed_pw = bcrypt.generate_password_hash(data['password']).decode('utf-8') #Storing Password, and since password can't be stored in plain text format, its encoded with utf-8
-    new_user = User(username = data['username'], password=hashed_pw) #username and password for new user
+    new_user = User(username = data['username'], password = hashed_pw) #username and password for new user
     db.session.add(new_user)                                         #Adds the new User
     db.session.commit()                                              # Make changes to the database 
     return jsonify({'message': 'User registered successfully'})      #return message after successfull registration of New User.
@@ -44,12 +58,21 @@ def register():
 
 @app.route('/login', methods=['POST']) #Used for Login
 def login():
-    data = request.get_json()                            	   #getting data in Json format
-    user = User.query.filter_by(username=data['username']).first() #searching for username in db
+
+    data = request.get_json() or {}
+    
+    if not data.get('username') or not data.get('password'):
+
+        return jsonify( {'success' : False, 'message' : 'username and password required'} ), 400
+    
+    user = User.query.filter_by(username = data['username']).first() #searching for username in db
+    
     if user and bcrypt.check_password_hash(user.password, data['password']): #If username and password matches
-        access_token = create_access_token(identity=user.id)
-        return jsonify(access_token=access_token)
-    return jsonify({'message': 'Invalid credentials'}), 401 #if username and password doesn't match, return this message with the error 401 response
+        
+        access_token = create_access_token(identity = user.id)
+        return jsonify({'success' : True, 'access_token' : access_token} )
+    
+    return jsonify( {'success' : False, 'message': 'Invalid credentials'} ), 401 #if username and password doesn't match, return this message with the error 401 response
 
 @app.route('/tasks', methods=['GET']) #Used for listing tasks by displaying their id, title and task description
 @jwt_required()
