@@ -36,6 +36,10 @@ class Task(db.Model):                                                   #Task db
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) #user id column, has a relation with user db through the user id column values 
 
 # Routes
+@app.route('/')
+def home():
+    return 'Task Manager API is running!'
+
 @app.route('/register', methods=['POST'])  #Used for registering new user.
 def register():
 
@@ -69,7 +73,7 @@ def login():
     
     if user and bcrypt.check_password_hash(user.password, data['password']): #If username and password matches
         
-        access_token = create_access_token(identity = user.id)
+        access_token = create_access_token(identity = str(user.id))
         return jsonify({'success' : True, 'access_token' : access_token} )
     
     return jsonify( {'success' : False, 'message': 'Invalid credentials'} ), 401 #if username and password doesn't match, return this message with the error 401 response
@@ -86,7 +90,7 @@ def get_tasks():
 def add_task():
     data = request.get_json()                                        #Get Data in Json Format
     user_id = get_jwt_identity()                                     #Get User Id
-    new_task = Task(title=data['title'], description=data.get('description', ''), user_id=user_id) #get title and description of the new task from data field
+    new_task = Task(title = data['title'], description=data.get('description', ''), user_id=user_id) #get title and description of the new task from data field
     db.session.add(new_task)                                         #Record the new task in the database
     db.session.commit()                                              #Save the Changes
     return jsonify({'message': 'Task created'})                      #Return message after successful addition of the new task
@@ -96,7 +100,7 @@ def add_task():
 def update_task(task_id):
     data = request.get_json()                                        #Getting Data in Json Format
     user_id = get_jwt_identity()                                     #Get User Id
-    task = Task.query.filter_by(id=task_id, user_id=user_id).first() # will return from the Task db if task id and user id matches
+    task = Task.query.filter_by(id = task_id, user_id=user_id).first() # will return from the Task db if task id and user id matches
     if not task:						     # if task isnt available in db, it will return "Task Not Found message", with a error 404 not found response code
         return jsonify({'message': 'Task not found'}), 404
     task.title = data.get('title', task.title)			     # will update the current title, with the updated title
@@ -109,7 +113,7 @@ def update_task(task_id):
 @jwt_required()
 def delete_task(task_id):
     user_id = get_jwt_identity()					# Getting user id
-    task = Task.query.filter_by(id=task_id, user_id=user_id).first()    # checking if task exist on Task db for the passed task id and user id
+    task = Task.query.filter_by(id = task_id, user_id=user_id).first()    # checking if task exist on Task db for the passed task id and user id
     if not task:							# if not present, will return the "Task Not Found" message, and return a 404 error response
         return jsonify({'message': 'Task not found'}), 404
     db.session.delete(task)						# if found in db, it will remove the required task
@@ -117,6 +121,8 @@ def delete_task(task_id):
     return jsonify({'message': 'Task deleted'})				# Return "Task deleted Successfully" message
 
 if __name__ == '__main__':   
+    
     with app.app_context():
         db.create_all()      # create the databases Task and User, Task will record all information of task and user will contain all info for users
-    app.run(debug=True)      
+    
+    app.run(host = '0.0.0.0', port = int(os.getenv('PORT', 5000)))     
