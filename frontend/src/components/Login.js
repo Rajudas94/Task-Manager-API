@@ -1,0 +1,89 @@
+import React , { useState } from "react";
+
+function Login(){
+    
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("")
+
+    const handleLogin = async (e) => {
+
+        e.preventDefault();
+        setMessage("");
+
+        try{
+
+           const response = await fetch("http://127.0.0.1:5000/login", {
+
+            method: "POST",
+            headers: { "Content-Type" : "application/json" },
+            body: JSON.stringify( {username, password} ), 
+
+           })
+
+           const data = await response.json();
+
+           if(response.ok) { 
+            
+            setMessage("Login successful!!");
+            localStorage.setItem("token" , data.access_token);
+
+           }    // closing for if block 
+           else { setMessage(data.message || "Invalid Credentials") };
+        
+        }   // closing for try block
+
+        catch (error){ setMessage("Error connecting to backend"); }
+    };   // closing for handle login variable    
+
+    return (
+
+        <div style = { {textAlign : "center", marginTop : "30px"} } >
+            
+            <h2> Login </h2>
+            
+            <form onSubmit = {handleLogin}>
+                
+                <input 
+                    type = "text"
+                    placeholder = "Username"
+                    value = {username}
+                    onChange = { (e) => setUsername(e.target.value) } 
+                    style = { { padding : "10px", margin : "10px" } }
+                    required
+                />
+                
+                <br />
+
+                <input 
+                    type = "password"
+                    placeholder = "Password"
+                    value = {password}
+                    onChange = { (e) => setPassword(e.target.value) }
+                    style = { {padding : "10px", margin : "10px"} } 
+                    required
+                /> 
+
+                <br />
+
+                <button 
+                    type = "submit"
+                    style = { {
+                        padding : "10px 20px",
+                        backgroundColor : "#007bff",
+                        color : "white",
+                        border : "none",
+                        borderRadius : "5px",
+                        cursor : "pointer"
+                    } } >
+                    
+                    Login
+
+                </button>
+            </form> 
+            <p>{message}</p>
+        </div>
+    );                     
+}
+
+export default Login;
