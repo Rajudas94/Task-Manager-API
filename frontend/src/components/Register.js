@@ -35,7 +35,7 @@ function Register() {
     
     return (
 
-        <div style = {{ textAlign: "center", marginTop: "30px" }} >
+        <div style = {{ textAlign: "center", marginTop: "5px" }} >
 
             <h2>Register</h2>
             <form onSubmit = {handleSubmit}>
@@ -45,7 +45,7 @@ function Register() {
                     placeholder = "Username"
                     value = {username}
                     onChange = { (e) => setUsername(e.target.value) }
-                    style = { { padding : "10px", margin : "10px" }}    
+                    style = { { padding : "10px", margin : "10px" }}
                     required
                 />
                 <br/>

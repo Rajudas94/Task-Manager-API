@@ -1,15 +1,20 @@
 import React , { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login(){
     
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("");
+    const navigate = useNavigate();
+    
 
     const handleLogin = async (e) => {
 
         e.preventDefault();
         setMessage("");
+
+        console.log("Login details :", {username, password});
 
         try{
 
@@ -19,26 +24,33 @@ function Login(){
             headers: { "Content-Type" : "application/json" },
             body: JSON.stringify( {username, password} ), 
 
-           })
+           });
 
            const data = await response.json();
+
+           console.log("Backend response :", data);
 
            if(response.ok) { 
             
             setMessage("Login successful!!");
             localStorage.setItem("token" , data.access_token);
+            navigate("/dashboard");
 
            }    // closing for if block 
            else { setMessage(data.message || "Invalid Credentials") };
         
         }   // closing for try block
 
-        catch (error){ setMessage("Error connecting to backend"); }
+        catch (error){ 
+            
+            setMessage("Error connecting to backend"); 
+            console.error("Error :", error);
+        }
     };   // closing for handle login variable    
 
     return (
 
-        <div style = { {textAlign : "center", marginTop : "30px"} } >
+        <div style = { {textAlign : "center", marginTop : "5px"} } >
             
             <h2> Login </h2>
             

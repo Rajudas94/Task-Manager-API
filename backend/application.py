@@ -83,7 +83,8 @@ def login():
 def get_tasks():
     user_id = get_jwt_identity()                                   # getting unique user id
     tasks = Task.query.filter_by(user_id=user_id).all()            #getting task/s based on user id 
-    return jsonify([{ 'id': t.id, 'title': t.title, 'description': t.description, 'done': t.done } for t in tasks]) #iterating in task/s and displaying which task/s are done by their respective id's, description and title
+    task_list = [{ 'id': t.id, 'title': t.title, 'description': t.description, 'done': t.done } for t in tasks] #iterating in task/s and displaying which task/s are done by their respective id's, description and title
+    return jsonify({"tasks" : task_list})
 
 @app.route('/tasks', methods=['POST']) #Used for Creating Tasks
 @jwt_required()
