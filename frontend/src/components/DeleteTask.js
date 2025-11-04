@@ -4,92 +4,76 @@ function DeleteTask() {
   const [tasks, setTasks] = useState([]);
   const [message, setMessage] = useState("");
 
-  // Fetch all tasks on component load
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://127.0.0.1:5000/tasks", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+        const res = await fetch("http://127.0.0.1:5000/tasks", {
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         });
-
-        const data = await response.json();
-        if (response.ok) {
-          setTasks(data.tasks || []);
-        } else {
-          setMessage(data.message || "Failed to fetch tasks");
-        }
-      } catch (error) {
+        const data = await res.json();
+        res.ok ? setTasks(data.tasks || []) : setMessage(data.message || "Failed to fetch tasks");
+      } catch {
         setMessage("Error connecting to backend");
       }
     };
-
     fetchTasks();
   }, []);
 
-  // Function to delete a task
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://127.0.0.1:5000/tasks/${id}`, {
+      const res = await fetch(`http://127.0.0.1:5000/tasks/${id}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
+      const data = await res.json();
+      if (res.ok) {
         setMessage(`Task ${id} deleted successfully`);
-        setTasks(tasks.filter((task) => task.id !== id)); // instantly update UI
-      } else {
-        setMessage(data.message || "Failed to delete task");
-      }
-    } catch (error) {
+        setTasks(tasks.filter((t) => t.id !== id));
+      } else setMessage(data.message || "Failed to delete task");
+    } catch {
       setMessage("Error deleting task");
     }
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "40px" }}>
-      <h2>Delete Tasks</h2>
+    <div style={{ textAlign: "center", marginTop: "5px" }}>
+      <h2 style={{ color: "#2c3e50", fontSize : "20px", }}><strong>🗑️ Delete Tasks</strong></h2>
       {message && <p>{message}</p>}
 
       {tasks.length === 0 ? (
         <p>No tasks found.</p>
       ) : (
-        <ul style={{ listStyleType: "none", padding: 0 }}>
+        <ul style={{ listStyle: "none", padding: 0 }}>
           {tasks.map((task) => (
             <li
               key={task.id}
               style={{
-                border: "1px solid #ddd",
-                borderRadius: "5px",
-                margin: "10px auto",
-                padding: "10px",
-                width: "60%",
+                border: "2px solid #75787cff",
+                backgroundColor: "#f8faff",
+                borderRadius: "15px",
+                margin: "13px auto",
+                padding: "12px",
+                width: "70%",
+                textAlign: "left",
               }}
             >
               <strong>{task.title}</strong>
               <p>{task.description}</p>
               <button
+                onClick={() => handleDelete(task.id)}
                 style={{
-                  backgroundColor: "red",
+                  backgroundColor: "#d12c1aff",
                   color: "white",
                   border: "none",
-                  padding: "5px 10px",
+                  padding: "6px 12px",
+                  borderRadius: "5px",
                   cursor: "pointer",
-                  borderRadius: "4px",
+                  marginTop : "12px",
                 }}
-                onClick={() => handleDelete(task.id)}
               >
-                Delete
+              <strong>Delete</strong>
               </button>
             </li>
           ))}

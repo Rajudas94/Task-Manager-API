@@ -22,40 +22,40 @@ function Dashboard() {
   }, [navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300 text-gray-800">
-      <div className="bg-white shadow-xl rounded-2xl p-10 w-96 text-center">
-        <h2 className="text-2xl font-semibold text-blue-600 mb-2">
+    <div className = "flex flex-col items-center justify-center min-h-screen w-screen bg-gradient-to-br from-red-100 to-orange-400 text-gray-800 fixed top-0 left-0">
+      <div className = "bg-white shadow-xl rounded-xl p-10 w-96 text-center">
+        <h2 className = "text-2xl font-semibold text-blue-600 mb-2">
           Welcome to Task Manager
         </h2>
-        <p className="text-sm text-gray-600 mb-6">Select an option below:</p>
+        <p className="text-sm text-gray-900 mb-6">Select an option below:</p>
 
         <div className="flex flex-col space-y-3">
           <button
             onClick={() => navigate("/create")}
             className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-lg transition"
           >
-            Create Task
+            ✏️Create Task
           </button>
 
           <button
             onClick={() => navigate("/tasks")}
             className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-lg transition"
           >
-            View Tasks
+            📄View Tasks
           </button>
 
           <button
             onClick={() => navigate("/update")}
             className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 rounded-lg transition"
           >
-            Update Task
+            📝Update Task
           </button>
 
           <button
             onClick={() => navigate("/delete")}
             className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-lg transition"
           >
-            Delete Task
+            🗑️Delete Task
           </button>
 
           <button

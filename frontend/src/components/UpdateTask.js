@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 function UpdateTask() {
+  
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [message, setMessage] = useState("");
 
-  // Fetch all tasks on page load
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -21,21 +21,19 @@ function UpdateTask() {
         const data = await response.json();
         if (response.ok) setTasks(data.tasks || []);
         else setMessage(data.message || "Failed to fetch tasks");
-      } catch (error) {
-        setMessage("Error connecting to backend");
-      }
+      } 
+      
+      catch (error) { setMessage("Error connecting to backend"); }
     };
 
     fetchTasks();
   }, []);
 
-  // Handle input changes for selected task
   const handleChange = (e) => {
     const { name, value } = e.target;
     setSelectedTask({ ...selectedTask, [name]: value });
   };
 
-  // Handle task update
   const handleUpdate = async () => {
     if (!selectedTask) return;
 
@@ -74,55 +72,63 @@ function UpdateTask() {
   };
 
   return (
-    <div style={{ display: "flex", gap: "30px", margin: "40px" }}>
-      {/* Left side - Task list */}
+    <div style={{ display: "flex", gap: "30px", margin: "5px",}}>
+      {/* Left Side - Task List */}
       <div style={{ flex: 1 }}>
-        <h2>Tasks</h2>
+        
+        <h2 className = "text-2xl font-semibold text-gray-800 text-center mb-6">
+          📋Your Task/s.
+        </h2>
+
         {tasks.length === 0 ? (
-          <p>No tasks found.</p>
+          <p style={{ textAlign: "center" }}>No tasks found.</p>
         ) : (
           <ul style={{ listStyleType: "none", padding: 0 }}>
             {tasks.map((task) => (
               <li
                 key={task.id}
-                style={{
-                  border: "1px solid #ddd",
-                  borderRadius: "5px",
-                  margin: "10px 0",
-                  padding: "10px",
-                  cursor: "pointer",
-                  backgroundColor:
-                    selectedTask?.id === task.id ? "#e3f2fd" : "white",
-                }}
                 onClick={() => setSelectedTask(task)}
+                style={{
+                  border: "1px solid #a1c4fd",
+                  borderRadius: "6px",
+                  margin: "10px 0",
+                  textAlign: "left",
+                  padding: "10px",
+                  backgroundColor:
+                    selectedTask?.id === task.id ? "#e8f0fe" : "#f9fbff",
+                  cursor: "pointer",
+                }}
               >
                 <strong>{task.title}</strong>
                 <p>{task.description}</p>
-                <small>ID: {task.id}</small>
+                <small>ID : {task.id}</small>
+              
               </li>
             ))}
           </ul>
         )}
       </div>
 
-      {/* Right side - Update form */}
+      {/* Right Side - Update Form */}
       <div style={{ flex: 1 }}>
-        <h2>Update Task</h2>
+        <h2 className = "text-2xl font-semibold text-gray-800 text-center mb-6" >
+          📝Update Task.
+        </h2>
+
         {selectedTask ? (
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
-              backgroundColor: "#f9f9f9",
+              backgroundColor: "#f5f9ff",
               padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0 0 5px rgba(0,0,0,0.1)",
+              borderRadius: "8px",
+              border: "1px solid #a1c4fd",
               width: "90%",
               margin: "auto",
             }}
           >
-            <label style={{ marginTop: "10px" }}>ID:</label>
+            <label>ID:</label>
             <input
               type="text"
               value={selectedTask.id}
@@ -132,11 +138,11 @@ function UpdateTask() {
                 marginBottom: "10px",
                 padding: "8px",
                 borderRadius: "5px",
-                border: "1px solid #ccc",
+                border: "1px solid #a1c4fd",
               }}
             />
 
-            <label style={{ marginTop: "10px" }}>Title:</label>
+            <label>Title:</label>
             <input
               type="text"
               name="title"
@@ -147,11 +153,11 @@ function UpdateTask() {
                 marginBottom: "10px",
                 padding: "8px",
                 borderRadius: "5px",
-                border: "1px solid #ccc",
+                border: "1px solid #a1c4fd",
               }}
             />
 
-            <label style={{ marginTop: "10px" }}>Description:</label>
+            <label>Description:</label>
             <textarea
               name="description"
               value={selectedTask.description}
@@ -161,30 +167,36 @@ function UpdateTask() {
                 marginBottom: "15px",
                 padding: "8px",
                 borderRadius: "5px",
-                border: "1px solid #ccc",
+                border: "1px solid #a1c4fd",
+                height: "100px",
+                resize: "none",
               }}
             />
 
             <button
-              onClick={handleUpdate}
-              style={{
-                backgroundColor: "green",
+              onClick = {handleUpdate}
+              style = {{
+                backgroundColor: "#4caf50",
                 color: "white",
                 border: "none",
                 padding: "10px 15px",
-                borderRadius: "5px",
+                borderRadius: "6px",
                 cursor: "pointer",
-                alignSelf: "flex-end",
+                textAlign: "center",
               }}
             >
               Save Changes
             </button>
           </div>
         ) : (
-          <p>Select a task from the left to update it.</p>
+          <p style = {{ textAlign: "center", }}>
+            Select a task from the left to update it.
+          </p>
         )}
 
-        {message && <p>{message}</p>}
+        {message && (
+          <p style={{ textAlign: "center", marginTop: "15px" }}>{message}</p>
+        )}
       </div>
     </div>
   );
