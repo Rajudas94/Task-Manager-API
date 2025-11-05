@@ -38,8 +38,9 @@ class Task(db.Model):                                                   #Task db
 if not os.path.exists('instance'):
     os.makedirs('instance')
 
-if not os.path.exists('instance/tasks.db'):
-    db.create_all()         
+with app.app_context():
+    if not os.path.exists('instance/tasks.db'):
+        db.create_all()       
 
 # Routes
 @app.route('/')
