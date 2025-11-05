@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///tasks.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI', 'sqlite:///instance/tasks.db')
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'super-secret')
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
 
@@ -33,7 +33,13 @@ class Task(db.Model):                                                   #Task db
     title = db.Column(db.String(120), nullable = False) #task title column
     description = db.Column(db.String(300)) #column for task description
     done = db.Column(db.Boolean, default = False) #status of task column
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False) #user id column, has a relation with user db through the user id column values 
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False) #user id column, has a relation with user db through the user id column values
+
+if not os.path.exists('instance'):
+    os.makedirs('instance')
+
+if not os.path.exists('instance/tasks.db'):
+    db.create_all()         
 
 # Routes
 @app.route('/')
