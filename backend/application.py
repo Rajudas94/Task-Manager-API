@@ -125,7 +125,14 @@ def delete_task(task_id):
         return jsonify({'message': 'Task not found'}), 404
     db.session.delete(task)						
     db.session.commit()							
-    return jsonify({'message': 'Task deleted'})				
+    return jsonify({'message': 'Task deleted'})
+
+@app.route('/debug')
+def debug():
+    return jsonify({
+        "message": "debug route working",
+        "routes": [str(r) for r in app.url_map.iter_rules()]
+    })    				
 
 if __name__ == '__main__':   
     
