@@ -40,7 +40,7 @@ function UpdateTask() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `https://task-manager-b4it.onrender.com/${selectedTask.id}`,
+        `https://task-manager-b4it.onrender.com/tasks/${selectedTask.id}`,
         {
           method: "PUT",
           headers: {
