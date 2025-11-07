@@ -12,7 +12,7 @@ function ViewTasks() {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await fetch("http://127.0.0.1:5000/tasks", {
+        const response = await fetch("https://task-manager-b4it.onrender.com/tasks", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
