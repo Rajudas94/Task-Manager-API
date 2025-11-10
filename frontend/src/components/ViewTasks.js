@@ -33,6 +33,34 @@ function ViewTasks() {
   
   }, []);
 
+  const markDone = async(taskId) => {
+
+    try{
+      const token = localStorage.getItem("token");
+
+      const response = await fetch (`https://task-manager-b4it.onrender.com/tasks/${taskId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type" : "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify( {done : true} ),
+      });
+
+      const data = await response.json();
+
+      if(response.ok){
+
+        setTasks(tasks.map(task =>
+          task.id === taskId ? {...task, done: true} : task
+        ));  
+      }  
+      
+      else { console.error(data.message || "Failed to mark task as done"); }
+    }
+    catch(error){ console.error("Error connecting to backend", error); }    
+  };
+
   return (
     <div style = {styles.container}>
       <h2 style = {styles.heading}>🔍Your Tasks</h2>
@@ -45,15 +73,29 @@ function ViewTasks() {
         <div style={styles.taskContainer}>
           {tasks.map((task) => (
             <div key = {task.id} style = {styles.taskCard}>
-              <p>
-                <strong>ID:</strong> {task.id}
-              </p>
-              <p>
-                <strong>Title:</strong> {task.title}
-              </p>
-              <p>
-                <strong>Description:</strong> {task.description}
-              </p>
+              
+              <p><strong>ID:</strong> {task.id} </p>
+              <p><strong>Title:</strong> {task.title}</p>
+              <p><strong>Description:</strong> {task.description}</p>
+
+              { !task.done ? (
+                <button
+                  onClick = {() => markDone(task.id)}
+                  style = {{
+                    backgroundColor: "#4CAF50",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    padding: "6px 10px",
+                    cursor: "pointer",
+                    marginTop: "10px"
+                  }}
+                >
+                  Mark as Done
+                </button>
+              ) : (
+                <p style = {{color: "green", fontWeight: "bold"}}>✅ Completed</p>
+              )}        
             </div>
           ))}
         </div>
@@ -93,13 +135,13 @@ const styles = {
   },
   
   taskCard: {
-    backgroundColor: "#c9eff1ff",
-    border: "1px solid #37f806ff",
+    backgroundColor: "#f0e580ff",
+    border: "1px solid #f8e806ff",
     borderRadius: "8px",
     padding: "15px 20px",
     width: "280px",
     textAlign: "left",
-    boxShadow: "0 2px 3px rgba(112, 241, 107, 1)",
+    boxShadow: "0 2px 3px rgba(153, 228, 218, 1)",
   },
 };
 
