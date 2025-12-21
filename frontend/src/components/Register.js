@@ -13,7 +13,7 @@ function Register() {
 
         try {
 
-          const res = await fetch("https://task-manager-b4it.onrender.com/register", {
+          const res = await fetch("/api/register", {
 
             method: "POST",
             headers: { "Content-Type" : "application/json"},

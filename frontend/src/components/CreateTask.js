@@ -19,7 +19,7 @@ function CreateTask() {
     }
 
     try {
-      const response = await fetch("https://task-manager-b4it.onrender.com/tasks", {
+      const response = await fetch("/api/tasks", {
         
         method: "POST",
         headers: {

@@ -10,7 +10,7 @@ function UpdateTask() {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch("https://task-manager-b4it.onrender.com/tasks", {
+        const response = await fetch("/api/tasks", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
