@@ -12,7 +12,7 @@ function ViewTasks() {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await fetch("/api/tasks", {
+        const response = await fetch("http://15.207.98.198:8000/tasks", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,7 @@ function ViewTasks() {
     try{
       const token = localStorage.getItem("token");
 
-      const response = await fetch (`https://task-manager-b4it.onrender.com/tasks/${taskId}`, {
+      const response = await fetch (`http://15.207.98.198:8000/tasks/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type" : "application/json",

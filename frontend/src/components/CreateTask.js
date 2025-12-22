@@ -19,7 +19,7 @@ function CreateTask() {
     }
 
     try {
-      const response = await fetch("/api/tasks", {
+      const response = await fetch("http://15.207.98.198:8000/tasks", {
         
         method: "POST",
         headers: {

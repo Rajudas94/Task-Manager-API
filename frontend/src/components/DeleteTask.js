@@ -8,7 +8,7 @@ function DeleteTask() {
     const fetchTasks = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("/api/tasks", {
+        const res = await fetch("http://15.207.98.198:8000/tasks", {
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -23,7 +23,7 @@ function DeleteTask() {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`https://task-manager-b4it.onrender.com/tasks/${id}`, {
+      const res = await fetch(`http://15.207.98.198:8000/tasks/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       });
