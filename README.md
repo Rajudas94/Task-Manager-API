@@ -32,7 +32,7 @@ A full-stack Task Manager Web application built with **Flask and React**. User c
 - Nginx
 
 ### Frontend
-React
+- React
 
 ### Tools and Deployment
 - Postman
@@ -71,14 +71,15 @@ requests are validated, authenticated, processed, persisted using SQLAlchemy and
 - User Specific tasks are created, viewed, updated or deleted.
 - User logs out and the token is deleted from the LocalStorage.
 
+
 ## 🗂️ Project Structure
 - will paste the structure from github
 
-### 🔧 API Testing
+## 🔧 API Testing
 - APIs tested using **Postman.**
-- Authentication and Authorization Verified.
+- Authentication and Authorization verified.
 
-### 🖼️ Project Screenshots
+## 🖼️ Project Screenshots
 
 - Landing Page
 <img width="1317" height="615" alt="LandingPage" src="https://github.com/user-attachments/assets/1cdb62cd-98a7-47b9-b19e-76e050f52fb5" />
@@ -109,7 +110,7 @@ requests are validated, authenticated, processed, persisted using SQLAlchemy and
 [Watch Walkthrough Video](Media/Walkthrough.webm)
 
 ## 🔜 Future Improvements
-- Task Priorities with duedates.
+- Task Priorities with due-dates.
 - Pagination and Filtering.
 - Redis Caching.
 - Docker Deployment.
