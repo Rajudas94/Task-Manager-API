@@ -1,7 +1,6 @@
 # 📝 Task Manager Web Application
 
-A full-stack Task Manager Web application built with **Flask and React**. User can register themselves, login using their credentials, and manage their tasks. Implements **JWT authentication, REST APIs, and CRUD operations**. Deployed the backend on **AWS EC2 (Backend)** and frontend on **Vercel**.
-
+A full-stack Task Manager Web application built with **Flask and React**. User can register themselves, login using their credentials, and manage their tasks. The application focuses on **JWT authentication, REST APIs, and CRUD operations**.
 
 # ✨ Features 
 ### 🔓 Authentication
