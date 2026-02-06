@@ -2,6 +2,11 @@
 
 A full-stack Task Manager Web application built with **Flask and React**. User can register themselves, login using their credentials, and manage their tasks. The application focuses on **JWT authentication, REST APIs, and CRUD operations**.
 
+## 🎥 Walkthrough Video
+
+👇 Click below to watch the demo of the app in action:  
+[Watch Walkthrough Video](Media/Walkthrough.webm)
+
 # ✨ Features 
 ### 🔓 Authentication
 - User registration and login.
@@ -104,10 +109,6 @@ requests are validated, authenticated, processed, persisted using SQLAlchemy and
 - Delete Tasks
 <img width="1317" height="615" alt="DeleteTask" src="https://github.com/user-attachments/assets/79d90671-baf1-406c-92d5-74d33a434748" />
 
-## 🎥 Walkthrough Video
-
-👇 Click below to watch the demo of the app in action:  
-[Watch Walkthrough Video](Media/Walkthrough.webm)
 
 ## 🔜 Future Improvements
 - Task Priorities with due-dates.
