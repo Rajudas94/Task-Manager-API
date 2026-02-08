@@ -4,7 +4,7 @@ A full-stack Task Manager Web application built with **Flask and React**. User c
 
 ## 🎥 Walkthrough Video
  
-👉[Click here to watch the demo video](https://drive.google.com/drive/u/2/folders/1gaVGBWZ7lFAyr1c9YA9YS3fmDJEzYmm_)
+👉[Click here to watch the demo video](https://drive.google.com/file/d/1sYFY9N5pYIXyrySNeUhaLDkWoS8Qe-dm/view?usp=sharing)
 
 # ✨ Features 
 ### 🔓 Authentication
