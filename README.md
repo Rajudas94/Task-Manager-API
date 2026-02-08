@@ -3,9 +3,8 @@
 A full-stack Task Manager Web application built with **Flask and React**. User can register themselves, login using their credentials, and manage their tasks. The application focuses on **JWT authentication, REST APIs, and CRUD operations**.
 
 ## 🎥 Walkthrough Video
-
-👇 Click below to watch the demo of the app in action:  
-[Watch Walkthrough Video](Media/Walkthrough.webm)
+ 
+👉[Click here to watch the demo video](https://drive.google.com/drive/u/2/folders/1gaVGBWZ7lFAyr1c9YA9YS3fmDJEzYmm_)
 
 # ✨ Features 
 ### 🔓 Authentication
